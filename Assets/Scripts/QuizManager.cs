@@ -73,6 +73,6 @@ public class QuizManager : MonoBehaviour
     {
         quizPanel.SetActive(false);
         endPanel.SetActive(true);
-        finalScoreText.text = $"You scored {score} out of {questions.Length}!";
+        finalScoreText.text = $"Your total score {score} out of {questions.Length}!";
     }
 }
