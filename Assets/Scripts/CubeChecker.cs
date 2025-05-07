@@ -11,7 +11,10 @@ public class CubeChecker : MonoBehaviour
     public Vector3 boxSize = new Vector3(2.34f, 0.08f, 1f);
     public LayerMask detectionLayer;
 
-    private int CubeBlockCount = 0;
+    private int CubeBlockCounter = 0;
+    private int maxCubeCount = 5;
+    private bool canAddCube = true;
+    
     
     
     private List<GameObject> cubes = new List<GameObject>();
@@ -19,6 +22,8 @@ public class CubeChecker : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (CubeBlockCounter == maxCubeCount  && !canAddCube) {return;}
+
         Collider[] hits = Physics.OverlapBox(transform.position + boxCenter, boxSize, Quaternion.identity, detectionLayer);
 
         foreach (var hit in hits)
@@ -26,21 +31,24 @@ public class CubeChecker : MonoBehaviour
             if (hit.gameObject.tag == "CubeBlock" && !cubes.Contains(hit.gameObject))
             {
                 AddingCube(hit.gameObject);   
-                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this));
+                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
             }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
+        if (CubeBlockCounter == 0) {return;}
+
         foreach (GameObject cube in cubes)
         {
             if (cube == collision.gameObject)
             {
                 Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
                 cubes.Remove(collision.gameObject);
+                CubeBlockCounter--;
                 Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
-                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this));
+                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
 
             }
         }
@@ -50,13 +58,22 @@ public class CubeChecker : MonoBehaviour
     private void AddingCube(GameObject cube)
     {
          cubes.Add(cube);
-         CubeBlockCount++;
-         Debug.Log(" Total numbers of cubes :" + CubeBlockCount );
+         CubeBlockCounter++;
+         Debug.Log(" Total numbers of cubes :" + CubeBlockCounter );
+         if (CubeBlockCounter == maxCubeCount) {canAddCube = false;}
+      
     }
+
+
     
     public int GetCubeCount()
     {
-        return CubeBlockCount;
+        return CubeBlockCounter;
+    }
+
+    public int GetMaxCubeCount()
+    {
+        return maxCubeCount;
     }
 
     private void OnDrawGizmosSelected()

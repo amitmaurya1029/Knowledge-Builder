@@ -7,8 +7,8 @@ using UnityEngine;
 public class CubeCheckerUi : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
-    private bool canUpdateUi = true;
-    private int maxCubeCount = 5;
+    
+    
     
     void Start()
     {
@@ -17,14 +17,9 @@ public class CubeCheckerUi : MonoBehaviour
 
     private void UpdateUi(object sender, CubeCheckerEventArgs e)
     {
-        Debug.Log("value cube : " + e.cubeChecker.GetCubeCount());
-        
-        if (!canUpdateUi) {return;}
-
-        if(e.cubeChecker.GetCubeCount() == maxCubeCount)
+        if(e.cubeChecker.GetCubeCount() == e.cubeChecker.GetMaxCubeCount())
         {
             text.text = $"You have Added all {e.cubeChecker.GetCubeCount()} cubes";
-            canUpdateUi = false;
         }
 
         else
