@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4672343657534383997, guid: 23aeb89497cfca04d894f123379385c2, type: 3}
+      propertyPath: m_InteractionLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4920166478325970472, guid: 23aeb89497cfca04d894f123379385c2, type: 3}
       propertyPath: m_Name
       value: SocketMiddle
