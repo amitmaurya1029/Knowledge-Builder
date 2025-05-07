@@ -8,8 +8,6 @@ public class CubeCheckerUi : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
     
-    
-    
     void Start()
     {
         CubeChecker.OnCubeAdded += UpdateUi;
