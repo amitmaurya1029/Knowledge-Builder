@@ -14,9 +14,7 @@ public class CubeChecker : MonoBehaviour
     private int CubeBlockCounter = 0;
     private int maxCubeCount = 5;
     private bool canAddCube = true;
-    
-    
-    
+
     private List<GameObject> cubes = new List<GameObject>();
 
 
@@ -60,7 +58,10 @@ public class CubeChecker : MonoBehaviour
          cubes.Add(cube);
          CubeBlockCounter++;
          Debug.Log(" Total numbers of cubes :" + CubeBlockCounter );
-         if (CubeBlockCounter == maxCubeCount) {canAddCube = false;}
+         if (CubeBlockCounter == maxCubeCount)
+        {
+            canAddCube = false;
+        }
       
     }
 
