@@ -83,5 +83,6 @@ public class QuizManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         FindObjectOfType<LevelManager>().NextLevel();
+        SoundManager.Instance.PlayMusic();
     }
 }

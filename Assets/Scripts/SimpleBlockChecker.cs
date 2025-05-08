@@ -50,5 +50,6 @@ public class SimpleBlockChecker : MonoBehaviour
             }
         }
         FindObjectOfType<LevelManager>().NextLevel();
+        SoundManager.Instance.PlayMusic();
     }
 }
