@@ -8,7 +8,7 @@ public class CubeChecker : MonoBehaviour
 {
     public static event EventHandler<CubeCheckerEventArgs> OnCubeAdded;
     public Vector3 boxCenter = Vector3.zero;
-    public Vector3 boxSize = new Vector3(2.34f, 0.08f, 1f);
+    public Vector3 boxSize = new Vector3(3.1f, 0.07f, 1f);
     public LayerMask detectionLayer;
 
     private int CubeBlockCounter = 0;

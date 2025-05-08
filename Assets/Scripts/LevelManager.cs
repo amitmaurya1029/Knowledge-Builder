@@ -36,6 +36,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             Debug.Log("All levels completed!");
+
         }
     }
 

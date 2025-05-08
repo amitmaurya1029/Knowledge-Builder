@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 [System.Serializable]
 public class Question
@@ -74,6 +75,13 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(false);
         endPanel.SetActive(true);
         finalScoreText.text = $"Your total score {score} out of {questions.Length}!";
+        StartCoroutine(GoToNextLevel());
+
+    }
+
+    IEnumerator GoToNextLevel()
+    {
+        yield return new WaitForSeconds(2f);
         FindObjectOfType<LevelManager>().NextLevel();
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CubeCheckerUi : MonoBehaviour
@@ -17,7 +18,8 @@ public class CubeCheckerUi : MonoBehaviour
     {
         if(e.cubeChecker.GetCubeCount() == e.cubeChecker.GetMaxCubeCount())
         {
-            text.text = $"You have Added all {e.cubeChecker.GetCubeCount()} cubes";
+            text.text = $"Congratulation! You have Added all {e.cubeChecker.GetCubeCount()} cubes";
+   
         }
 
         else
@@ -26,6 +28,5 @@ public class CubeCheckerUi : MonoBehaviour
         }
     }
 
-    
 
 }
