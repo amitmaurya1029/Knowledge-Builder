@@ -74,5 +74,6 @@ public class QuizManager : MonoBehaviour
         quizPanel.SetActive(false);
         endPanel.SetActive(true);
         finalScoreText.text = $"Your total score {score} out of {questions.Length}!";
+        FindObjectOfType<LevelManager>().NextLevel();
     }
 }
