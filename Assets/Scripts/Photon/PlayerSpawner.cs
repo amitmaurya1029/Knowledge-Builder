@@ -6,8 +6,8 @@ using Photon.Pun;
 public class PlayerSpawner : MonoBehaviourPunCallbacks
 {
 
-    
     private GameObject spawnPlayer; 
+    
     void Start()
     {
         // Debug.Log("")
