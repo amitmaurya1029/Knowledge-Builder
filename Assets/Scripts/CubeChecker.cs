@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using OpenCover.Framework.Model;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CubeChecker : MonoBehaviour
