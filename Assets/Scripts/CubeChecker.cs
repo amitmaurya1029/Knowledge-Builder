@@ -6,7 +6,8 @@ public class CubeChecker : MonoBehaviour
 {
     public static event EventHandler<CubeCheckerEventArgs> OnCubeAdded;
     public Vector3 boxCenter = Vector3.zero;
-    public Vector3 boxSize = new Vector3(3.1f, 0.07f, 1f);
+    public Vector3 boxSize = new Vector3(3.37f, 0.19f, 1.68f);
+    
     public LayerMask detectionLayer;
 
     private int CubeBlockCounter = 0;
@@ -18,36 +19,67 @@ public class CubeChecker : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+          Debug.Log("cube added to table : entered");
         if (CubeBlockCounter == maxCubeCount  && !canAddCube) {return;}
-
+         Debug.Log("cube added to table : entered : 1");
         Collider[] hits = Physics.OverlapBox(transform.position + boxCenter, boxSize, Quaternion.identity, detectionLayer);
-
+        Debug.Log("cube added to table : entered : 2 : length hit" + hits.Length);
         foreach (var hit in hits)
         {
+            Debug.Log("cube added to table : entered : 3");
             if (hit.gameObject.tag == "CubeBlock" && !cubes.Contains(hit.gameObject))
             {
                 AddingCube(hit.gameObject);   
                 OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
+                Debug.Log("cube added to table : ");
             }
         }
+        Debug.Log("cube added to table : entered : 4");
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (CubeBlockCounter == 0) {return;}
 
-        foreach (GameObject cube in cubes)
+        else
         {
-            if (cube == collision.gameObject)
+
+            // Debug.Log("count this num : 1");
+            // foreach (GameObject cube in cubes)
+            // {
+            //     Debug.Log("count this num : 2");
+            //     if (cube == collision.gameObject && cubes.Count > 0)
+            //     {
+            //         Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
+            //         cubes.Remove(collision.gameObject);
+            //         CubeBlockCounter--;
+            //         Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
+            //         OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
+
+            //     }
+            // }
+
+
+            for (int i = 0; i <= cubes.Count; i++)
             {
-                Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
-                cubes.Remove(collision.gameObject);
-                CubeBlockCounter--;
-                Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
-                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
+                Debug.Log(" total cube length : 1" + cubes.Count);
+                if (cubes[i] == collision.gameObject)
+                {
+                    Debug.Log(" total cube length : 2");
+                    //Debug.Log("Remove object : " + cubes[i].name + "cubes count :" + cubes.Count);
+                    cubes.Remove(collision.gameObject);
+                    Debug.Log(" total cube length : 3");
+                    CubeBlockCounter--;
+                    Debug.Log(" total cube length : 4");
+                    // Debug.Log("Remove object : " + cubes[i].name + "cubes count :" + cubes.Count);
+                    OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
+                    Debug.Log(" total cube length : 5");
+
+                }
 
             }
         }
+       
     }
 
 
