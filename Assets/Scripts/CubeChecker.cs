@@ -19,22 +19,18 @@ public class CubeChecker : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-          Debug.Log("cube added to table : entered");
+        Debug.Log("cube added to table : entered");
         if (CubeBlockCounter == maxCubeCount  && !canAddCube) {return;}
-         Debug.Log("cube added to table : entered : 1");
         Collider[] hits = Physics.OverlapBox(transform.position + boxCenter, boxSize, Quaternion.identity, detectionLayer);
-        Debug.Log("cube added to table : entered : 2 : length hit" + hits.Length);
         foreach (var hit in hits)
         {
-            Debug.Log("cube added to table : entered : 3");
             if (hit.gameObject.tag == "CubeBlock" && !cubes.Contains(hit.gameObject))
             {
                 AddingCube(hit.gameObject);   
-                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
-                Debug.Log("cube added to table : ");
+                OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true, Cubes = this.cubes,
+                     maxCubeCount = this.maxCubeCount});
             }
         }
-        Debug.Log("cube added to table : entered : 4");
     }
 
     private void OnCollisionExit(Collision collision)
@@ -43,21 +39,16 @@ public class CubeChecker : MonoBehaviour
 
         else
         {
-
+             Debug.Log(" total cube length BEFORE : " + cubes.Count);
             for (int i = 0; i <= cubes.Count; i++)
             {
-                Debug.Log(" total cube length : 1" + cubes.Count);
+                Debug.Log(" total cube length : " + cubes.Count);
                 if (cubes[i] == collision.gameObject)
                 {
-                    Debug.Log(" total cube length : 2");
-                    //Debug.Log("Remove object : " + cubes[i].name + "cubes count :" + cubes.Count);
                     cubes.Remove(collision.gameObject);
-                    Debug.Log(" total cube length : 3");
                     CubeBlockCounter--;
-                    Debug.Log(" total cube length : 4");
-                    // Debug.Log("Remove object : " + cubes[i].name + "cubes count :" + cubes.Count);
-                    OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
-                    Debug.Log(" total cube length : 5");
+                    OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true, Cubes = this.cubes,
+                     maxCubeCount = this.maxCubeCount});
 
                 }
 
@@ -102,8 +93,10 @@ public class CubeChecker : MonoBehaviour
 
 public class CubeCheckerEventArgs : EventArgs
 {
+    public int maxCubeCount;
     public CubeChecker cubeChecker {get;}
     public bool canUpdateUi = true;
+    public List<GameObject> Cubes = new List<GameObject>();
     public CubeCheckerEventArgs(CubeChecker cubeChecker)
     {
         this.cubeChecker = cubeChecker;
