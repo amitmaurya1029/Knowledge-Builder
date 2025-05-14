@@ -44,22 +44,6 @@ public class CubeChecker : MonoBehaviour
         else
         {
 
-            // Debug.Log("count this num : 1");
-            // foreach (GameObject cube in cubes)
-            // {
-            //     Debug.Log("count this num : 2");
-            //     if (cube == collision.gameObject && cubes.Count > 0)
-            //     {
-            //         Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
-            //         cubes.Remove(collision.gameObject);
-            //         CubeBlockCounter--;
-            //         Debug.Log("Remove object : " + cube.name + "cubes count :" + cubes.Count);
-            //         OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true});
-
-            //     }
-            // }
-
-
             for (int i = 0; i <= cubes.Count; i++)
             {
                 Debug.Log(" total cube length : 1" + cubes.Count);
