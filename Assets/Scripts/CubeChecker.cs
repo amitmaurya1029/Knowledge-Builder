@@ -40,7 +40,7 @@ public class CubeChecker : MonoBehaviour
         else
         {
              Debug.Log(" total cube length BEFORE : " + cubes.Count);
-            for (int i = 0; i <= cubes.Count; i++)
+            for (int i = 0; i < cubes.Count; i++)
             {
                 Debug.Log(" total cube length : " + cubes.Count);
                 if (cubes[i] == collision.gameObject)
@@ -49,6 +49,7 @@ public class CubeChecker : MonoBehaviour
                     CubeBlockCounter--;
                     OnCubeAdded?.Invoke(this, new CubeCheckerEventArgs(this) {canUpdateUi = true, Cubes = this.cubes,
                      maxCubeCount = this.maxCubeCount});
+                     return;
 
                 }
 

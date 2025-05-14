@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class CubeBlocker : MonoBehaviour
 {
+
+    private List<XRGrabInteractableOnNetwork> XrGrabIntrt = new List<XRGrabInteractableOnNetwork>();
+    private bool isXrGrabCompCashed = false;
+    private bool isXrGrabCompDisabled = false;
+    
     void Start()
     {
         CubeChecker.OnCubeAdded += SetCubesToUnGrabable;
@@ -15,14 +20,44 @@ public class CubeBlocker : MonoBehaviour
         
         if (e.maxCubeCount == e.Cubes.Count)
         {
-            foreach (GameObject cube in e.Cubes)
+            if (!isXrGrabCompCashed)
             {
-                cube.GetComponent<XRGrabInteractableOnNetwork>().enabled = false;    
+                GetRefreceOfCubeComp(e);
             }
-            Debug.Log("All cubes gets ungrabable : " + e.Cubes.Count);
+            if (!isXrGrabCompDisabled)
+            {
+                CubesInteractableState(false);
+            }
+            
+        }
+        else
+        {
+            if (isXrGrabCompDisabled)
+            {
+                CubesInteractableState(true);
+            }
         }
     }
 
+    private void CubesInteractableState( bool state)
+    {
+        for (int i = 0; i < XrGrabIntrt.Count; i++)
+        {
+            XrGrabIntrt[i].enabled = state;
+
+        }
+        isXrGrabCompDisabled = !state;
+        Debug.Log("All cubes gets ungrabable :  dissabled ");
+    }
 
 
+    private void GetRefreceOfCubeComp(CubeCheckerEventArgs e)
+    {
+        foreach(GameObject cube in e.Cubes)
+        {
+             XrGrabIntrt.Add(cube.GetComponent<XRGrabInteractableOnNetwork>());
+        }
+        isXrGrabCompCashed = true;
+
+    }
 }
