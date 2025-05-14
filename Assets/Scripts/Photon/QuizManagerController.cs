@@ -58,7 +58,6 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
     }
 
 
-
      public override void OnPlayerEnteredRoom(Player newPlayer)             // We send the request to all players to update the master current question.
     {
         if (PhotonNetwork.IsMasterClient)
@@ -99,7 +98,7 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
             }
         }
 
-        scoreText.text = isQuizMaster ? $"Score: {score}/{questions.Length}" : "Quiz in progress...";
+        scoreText.text = $"Score: {score}/{questions.Length}";
     }
 
     void OnAnswerSelected(int selectedIndex)
@@ -110,12 +109,25 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
         if (selectedIndex == questions[currentQuestionIndex].correctAnswerIndex)
         {
             score++;
+
+                // Update score for all other clients
+            photonView.RPC("UpdateScoreRPC", RpcTarget.Others, score);
         }
    
         currentQuestionIndex++;
         BroadcastQuestion(currentQuestionIndex); 
     }
 
+    [PunRPC]
+    void UpdateScoreRPC(int newScore)
+    {
+        score = newScore;
+
+        if (!PhotonNetwork.LocalPlayer.IsQuizMaster())
+        {
+            scoreText.text = $"Quiz Master's Score: {score}/{questions.Length}";
+        }
+    }
 
 
 
@@ -125,10 +137,16 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
         quizPanel.SetActive(false);
         endPanel.SetActive(true);
 
+        // if (PhotonNetwork.LocalPlayer.IsQuizMaster())
+        //     finalScoreText.text = $"Your total score: {finalScore} out of {questions.Length}!";
+        // else
+        //     finalScoreText.text = $"Quiz complete. Please check results with Quiz Master.";
+
         if (PhotonNetwork.LocalPlayer.IsQuizMaster())
-            finalScoreText.text = $"Your total score: {finalScore} out of {questions.Length}!";
+        finalScoreText.text = $"Your total score: {finalScore} out of {questions.Length}!";
+
         else
-            finalScoreText.text = $"Quiz complete. Please check results with Quiz Master.";
+        finalScoreText.text = $"Quiz Master's final score: {finalScore} out of {questions.Length}!";
 
         StartCoroutine(GoToNextLevel());
     }
