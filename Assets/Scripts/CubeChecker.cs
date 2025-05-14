@@ -67,6 +67,7 @@ public class CubeChecker : MonoBehaviour
          if (CubeBlockCounter == maxCubeCount)
         {
             canAddCube = false;
+            FindObjectOfType<LevelManager>().NextLevel();
         }
       
     }

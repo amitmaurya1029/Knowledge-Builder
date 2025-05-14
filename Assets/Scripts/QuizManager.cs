@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Photon.Pun;
 
 [System.Serializable]
 public class Question
@@ -47,16 +48,29 @@ public class QuizManager : MonoBehaviour
         Question q = questions[currentQuestionIndex];
         questionText.text = q.questionText;
 
+        bool isQuizMaster = PhotonNetwork.LocalPlayer.IsQuizMaster(); // Using your extension method
+
         for (int i = 0; i < answerButtons.Length; i++)
         {
             int index = i;
             answerButtons[i].gameObject.SetActive(i < q.answers.Length);
             answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = q.answers[i];
-            answerButtons[i].onClick.RemoveAllListeners();
-            answerButtons[i].onClick.AddListener(() => OnAnswerSelected(index));
-        }
 
-        scoreText.text = $"Score: {score}/{questions.Length}";
+            answerButtons[i].onClick.RemoveAllListeners();
+
+            if (isQuizMaster)
+            {
+                // Only add listener for Quiz Master
+                answerButtons[i].interactable = true;
+                answerButtons[i].onClick.AddListener(() => OnAnswerSelected(index));
+            }
+            else
+            {
+                answerButtons[i].interactable = false; // Others can see but not click
+            }
+    }
+
+    scoreText.text = $"Score: {score}/{questions.Length}";
     }
 
     void OnAnswerSelected(int index)

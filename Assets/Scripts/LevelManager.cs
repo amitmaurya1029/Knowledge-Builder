@@ -13,10 +13,10 @@ public class LevelManager : MonoBehaviour
     public void LoadLevel(int index)
     {
         // Disable all levels first
-        for (int i = 0; i < levels.Length; i++)
-        {
-            levels[i].SetActive(false);
-        }
+        // for (int i = 0; i < levels.Length; i++)
+        // {
+        //     levels[i].SetActive(false);
+        // }
 
         // Enable selected level
         if (index >= 0 && index < levels.Length)

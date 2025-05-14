@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using Photon.Pun;
 
+using Photon.Realtime; 
+using ExitGames.Client.Photon;
+
 public class NetworkPlayer : MonoBehaviour
 {
     [SerializeField] private Transform leftHand;
@@ -23,6 +26,16 @@ public class NetworkPlayer : MonoBehaviour
         leftController = GameObject.FindWithTag("LeftController").transform;
         rightController = GameObject.FindWithTag("RightController").transform;
         head = Camera.main.transform;;
+
+        if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+        {
+           PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable {
+                { "IsQuizMaster", true }
+            });
+            Debug.Log("Assigned this player as Quiz Master.");
+        }
+
+
     }
     void Update()
     {
