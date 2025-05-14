@@ -773,6 +773,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
       insertIndex: -1
       addedObject: {fileID: 937796391}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 937796397}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 937796396}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c6984c48aed9a154294088f4265d8478, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 937796395}
   m_SourcePrefab: {fileID: 100100000, guid: c6984c48aed9a154294088f4265d8478, type: 3}
 --- !u!1001 &196206974
 PrefabInstance:
@@ -1370,6 +1379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 223759302}
   - component: {fileID: 223759303}
+  - component: {fileID: 223759304}
   m_Layer: 5
   m_Name: QuizChallenge
   m_TagString: Untagged
@@ -1400,9 +1410,60 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223759301}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1db0090d1134cc447be70efc5c1d9fa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questionText: {fileID: 944332621}
+  answerButtons:
+  - {fileID: 6274918130228963082}
+  - {fileID: 1876510913}
+  - {fileID: 196883033}
+  - {fileID: 684649546}
+  scoreText: {fileID: 315613165}
+  quizPanel: {fileID: 1868929307}
+  endPanel: {fileID: 1186558699}
+  finalScoreText: {fileID: 274311181}
+  questions:
+  - questionText: What is the capital of France?
+    answers:
+    - Berlin
+    - Madrid
+    - Paris
+    - Rome
+    correctAnswerIndex: 2
+  - questionText: What is 7 + 6?
+    answers:
+    - 12
+    - 13
+    - 14
+    - 15
+    correctAnswerIndex: 1
+  - questionText: Which continent is Egypt in?
+    answers:
+    - Asia
+    - Europe
+    - Africa
+    - South America
+    correctAnswerIndex: 2
+  - questionText: Who is the main character in 'Iron Man'?
+    answers:
+    - Tony Stark
+    - Bruce Wayne
+    - Clark Kent
+    - Steve Rogers
+    correctAnswerIndex: 0
+--- !u!114 &223759304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223759301}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb60a4c52aaa53645a833758ccfb3168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   questionText: {fileID: 944332621}
@@ -4689,6 +4750,96 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &937796395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937796387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
+--- !u!114 &937796396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937796387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 937796395}
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &937796397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937796387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb60a4c52aaa53645a833758ccfb3168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questionText: {fileID: 944332621}
+  answerButtons:
+  - {fileID: 6274918130228963082}
+  - {fileID: 1876510913}
+  - {fileID: 196883033}
+  - {fileID: 684649546}
+  scoreText: {fileID: 315613165}
+  quizPanel: {fileID: 1868929307}
+  endPanel: {fileID: 1186558699}
+  finalScoreText: {fileID: 274311181}
+  questions:
+  - questionText: What is the capital of France?
+    answers:
+    - Berlin
+    - Madrid
+    - Paris
+    - Rome
+    correctAnswerIndex: 2
+  - questionText: What is 7 + 6?
+    answers:
+    - 12
+    - 13
+    - 14
+    - 15
+    correctAnswerIndex: 1
+  - questionText: Which continent is Egypt in?
+    answers:
+    - Asia
+    - Europe
+    - Africa
+    - South America
+    correctAnswerIndex: 2
+  - questionText: Who is the main character in 'Iron Man'?
+    answers:
+    - Tony Stark
+    - Bruce Wayne
+    - Clark Kent
+    - Steve Rogers
+    correctAnswerIndex: 0
 --- !u!114 &944332621 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1897108578803551515, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
@@ -8024,7 +8175,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.5186157e-36, z: 5.35e-43, w: 2.73e-43}
+  m_BoundingSphereOverride: {x: 0, y: 9.19e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
