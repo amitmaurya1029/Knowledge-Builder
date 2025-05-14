@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 
 [System.Serializable]
 public class QuestionData
@@ -34,41 +33,63 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
     void Start()
     {
         photonView = GetComponent<PhotonView>();
-
-        // Everyone sees the panel
         quizPanel.SetActive(true);
         endPanel.SetActive(false);
 
-        if (PhotonNetwork.LocalPlayer.IsQuizMaster())
+        if (PhotonNetwork.IsMasterClient)
         {
             score = 0;
             currentQuestionIndex = 0;
-            ShowQuestion();
+            BroadcastQuestion(currentQuestionIndex); // Send question to everyone
         }
     }
 
-    void ShowQuestion()
+    void BroadcastQuestion(int questionIndex)
     {
-        if (currentQuestionIndex >= questions.Length)
+        if (questionIndex < questions.Length)
         {
-            EndQuiz();
-            return;
+            QuestionData q = questions[questionIndex];
+            photonView.RPC("DisplayQuestionRPC", RpcTarget.All, questionIndex, q.questionText, q.answers[0], q.answers[1], q.answers[2], q.answers[3]);
         }
+        else
+        {
+            photonView.RPC("EndQuizRPC", RpcTarget.All, score);
+        }
+    }
 
-        QuestionData q = questions[currentQuestionIndex];
-        questionText.text = q.questionText;
 
+
+     public override void OnPlayerEnteredRoom(Player newPlayer)             // We send the request to all players to update the master current question.
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            QuestionData q = questions[currentQuestionIndex];
+            photonView.RPC("DisplayQuestionRPC", newPlayer, currentQuestionIndex,
+                q.questionText,
+                q.answers[0], q.answers[1], q.answers[2], q.answers[3]);
+        }
+    }
+
+
+    [PunRPC]
+    void DisplayQuestionRPC(int questionIndex, string question, string ans1, string ans2, string ans3, string ans4)
+    {
+        currentQuestionIndex = questionIndex;
+
+        questionText.text = question;
+
+        string[] answers = new string[] { ans1, ans2, ans3, ans4 };
         bool isQuizMaster = PhotonNetwork.LocalPlayer.IsQuizMaster();
 
         for (int i = 0; i < answerButtons.Length; i++)
         {
-            int index = i;
-            answerButtons[i].gameObject.SetActive(i < q.answers.Length);
-            answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = q.answers[i];
+            answerButtons[i].gameObject.SetActive(i < answers.Length);
+            answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answers[i];
             answerButtons[i].onClick.RemoveAllListeners();
 
             if (isQuizMaster)
             {
+                int index = i;
                 answerButtons[i].interactable = true;
                 answerButtons[i].onClick.AddListener(() => OnAnswerSelected(index));
             }
@@ -78,47 +99,36 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
             }
         }
 
-        // Everyone sees the Quiz Master's score (optional)
-        if (isQuizMaster)
-            scoreText.text = $"Score: {score}/{questions.Length}";
-        else
-            scoreText.text = $"Quiz in progress...";
+        scoreText.text = isQuizMaster ? $"Score: {score}/{questions.Length}" : "Quiz in progress...";
     }
 
-    void OnAnswerSelected(int index)
+    void OnAnswerSelected(int selectedIndex)
     {
         if (!PhotonNetwork.LocalPlayer.IsQuizMaster())
             return;
 
-     
-        photonView.RPC("SubmitAnswerRPC", RpcTarget.All, index);
-    }
-
-    [PunRPC]
-    void SubmitAnswerRPC(int index)
-    {
-        if (index == questions[currentQuestionIndex].correctAnswerIndex)
+        if (selectedIndex == questions[currentQuestionIndex].correctAnswerIndex)
         {
             score++;
         }
-
+   
         currentQuestionIndex++;
-        ShowQuestion();
+        BroadcastQuestion(currentQuestionIndex); 
     }
 
-    void EndQuiz()
+
+
+
+    [PunRPC]
+    void EndQuizRPC(int finalScore)
     {
         quizPanel.SetActive(false);
         endPanel.SetActive(true);
 
         if (PhotonNetwork.LocalPlayer.IsQuizMaster())
-        {
-            finalScoreText.text = $"Your total score: {score} out of {questions.Length}!";
-        }
+            finalScoreText.text = $"Your total score: {finalScore} out of {questions.Length}!";
         else
-        {
             finalScoreText.text = $"Quiz complete. Please check results with Quiz Master.";
-        }
 
         StartCoroutine(GoToNextLevel());
     }
@@ -126,16 +136,8 @@ public class QuizManagerController : MonoBehaviourPunCallbacks
     IEnumerator GoToNextLevel()
     {
         yield return new WaitForSeconds(2f);
-
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        if (levelManager != null)
-        {
-            levelManager.NextLevel();
-        }
-
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlayMusic();
-        }
+        LevelManager manager = FindObjectOfType<LevelManager>();
+        if (manager != null) manager.NextLevel();
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayMusic();
     }
 }

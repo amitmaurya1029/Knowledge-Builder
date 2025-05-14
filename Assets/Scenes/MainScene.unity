@@ -1378,7 +1378,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 223759302}
-  - component: {fileID: 223759303}
   - component: {fileID: 223759304}
   m_Layer: 5
   m_Name: QuizChallenge
@@ -1403,57 +1402,6 @@ Transform:
   - {fileID: 937796388}
   m_Father: {fileID: 2046629159}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &223759303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223759301}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1db0090d1134cc447be70efc5c1d9fa3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questionText: {fileID: 944332621}
-  answerButtons:
-  - {fileID: 6274918130228963082}
-  - {fileID: 1876510913}
-  - {fileID: 196883033}
-  - {fileID: 684649546}
-  scoreText: {fileID: 315613165}
-  quizPanel: {fileID: 1868929307}
-  endPanel: {fileID: 1186558699}
-  finalScoreText: {fileID: 274311181}
-  questions:
-  - questionText: What is the capital of France?
-    answers:
-    - Berlin
-    - Madrid
-    - Paris
-    - Rome
-    correctAnswerIndex: 2
-  - questionText: What is 7 + 6?
-    answers:
-    - 12
-    - 13
-    - 14
-    - 15
-    correctAnswerIndex: 1
-  - questionText: Which continent is Egypt in?
-    answers:
-    - Asia
-    - Europe
-    - Africa
-    - South America
-    correctAnswerIndex: 2
-  - questionText: Who is the main character in 'Iron Man'?
-    answers:
-    - Tony Stark
-    - Bruce Wayne
-    - Clark Kent
-    - Steve Rogers
-    correctAnswerIndex: 0
 --- !u!114 &223759304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8175,7 +8123,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 9.19e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 1.7750736e+28, y: 1.4e-43, z: 0, w: 1.2205253e-36}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
